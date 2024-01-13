@@ -1,0 +1,342 @@
+:root {
+  --shadow-color: 0deg 0% 7%;
+  --shadow-elevation-low: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+    0.4px 0.8px 1px -1.2px hsl(var(--shadow-color) / 0.34),
+    1px 2px 2.5px -2.5px hsl(var(--shadow-color) / 0.34);
+  --shadow-elevation-medium: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36),
+    0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
+    2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
+    5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
+  --shadow-elevation-high: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+    1.5px 2.9px 3.7px -0.4px hsl(var(--shadow-color) / 0.34),
+    2.7px 5.4px 6.8px -0.7px hsl(var(--shadow-color) / 0.34),
+    4.5px 8.9px 11.2px -1.1px hsl(var(--shadow-color) / 0.34),
+    7.1px 14.3px 18px -1.4px hsl(var(--shadow-color) / 0.34),
+    11.2px 22.3px 28.1px -1.8px hsl(var(--shadow-color) / 0.34),
+    17px 33.9px 42.7px -2.1px hsl(var(--shadow-color) / 0.34),
+    25px 50px 62.9px -2.5px hsl(var(--shadow-color) / 0.34);
+}
+
+[data-theme="tomorrow"] {
+  --editor-foreground: #cccccc;
+--editor-background: #2d2d2d;
+--editor-caret: #cc99cc;
+
+
+--editor-selection-foreground: #ffffff;
+--editor-selection-background: #515151;
+
+--h1-foreground: #66cccc;
+--h1-font-style: bold;
+
+
+--h2-foreground: #66cccc;
+--h2-font-style: bold;
+
+
+--h3-foreground: #66cccc;
+--h3-font-style: bold;
+
+
+--h4-foreground: #66cccc;
+--h4-font-style: bold;
+
+
+--h5-foreground: #66cccc
+--h5-font-style: bold;
+
+
+--h6-foreground: #66cccc
+--h6-font-style: bold;
+
+
+--EMPH-foreground: #ffcc66;
+--EMPH-font-style: italic;
+
+
+--STRONG-foreground: #f99157;
+--STRONG-font-style: bold;
+
+
+--HRULE-foreground: #999999;
+
+
+--LIST_BULLET-foreground: #6699cc;
+
+
+--LIST_ENUMERATOR-foreground: #6699cc;
+
+
+--LINK-foreground: #99cc99;
+
+--AUTO_LINK_URL-foreground: #99cc99;
+
+--AUTO_LINK_EMAIL-foreground: #99cc99;
+
+--REFERENCE-foreground: #66cccc;
+
+--IMAGE-foreground: #cc99cc;
+
+--CODE-foreground: #999999;
+
+--VERBATIM-foreground: #999999;
+
+--HTML_ENTITY-foreground: #cc99cc;
+
+--COMMENT-foreground: #888888;
+
+--BLOCKQUOTE-foreground: #f2777a;
+}
+[data-theme="solorizedDark"] {
+  --editor-foreground: #839496;
+  --editor-background: #002b36;
+  --editor-caret: #cc99cc;
+
+  --editor-selection-foreground: #002b36;
+  --editor-selection-background: #d33682;
+
+  --h1-foreground: #b58900;
+  --h1-font-style: bold;
+  --h1-font-size: 24px;
+
+  --h2-foreground: #b58900;
+  --h2-font-style: bold;
+  --h2-font-size: 20px;
+
+  --h3-foreground: #b58900;
+  --h3-font-size: 17px;
+
+  --h4-foreground: #b58900;
+  --h4-font-size: 15px;
+
+  --h5-foreground: #b58900;
+  --h5-font-size: 13px;
+
+  --h6-foreground: #b58900;
+  --h6-font-size: 11px;
+
+  --EMPH-foreground: #93a1a1;
+  --EMPH-font-style: italic;
+
+  --STRONG-foreground: #93a1a1;
+  --STRONG-font-style: bold;
+
+  --HRULE-foreground: #b58900;
+
+  --LIST_BULLET-foreground: #586e75;
+
+  --LIST_ENUMERATOR-foreground: #586e75;
+
+  --LINK-foreground: #268bd2;
+
+  --AUTO_LINK_URL-foreground: #268bd2;
+
+  --AUTO_LINK_EMAIL-foreground: #268bd2;
+
+  --REFERENCE-foreground: #6c71c4;
+
+  --IMAGE-foreground: #cb4b16;
+
+  --CODE-foreground: #93a1a1;
+  --CODE-background: #073642;
+
+  --VERBATIM-foreground: #93a1a1;
+  --VERBATIM-background: #073642;
+
+  --HTML_ENTITY-foreground: #586e75;
+
+  --COMMENT-foreground: #586e75;
+
+  --BLOCKQUOTE-foreground: #839496;
+}
+[data-theme="solorizedLight"] {
+  --editor-foreground: #657b83;
+  --editor-background: #fdf6e3;
+  --editor-caret: #002b36;
+
+  --editor-selection-foreground: #fdf6e3;
+  --editor-selection-background: #d33682;
+
+  --h1-foreground: #b58900;
+  --h1-font-style: bold;
+  --h1-font-size: 24px;
+
+  --h2-foreground: #b58900;
+  --h2-font-style: bold;
+  --h2-font-size: 20px;
+
+  --h3-foreground: #b58900;
+  --h3-font-size: 17px;
+
+  --h4-foreground: #b58900;
+  --h4-font-size: 15px;
+
+  --h5-foreground: #b58900;
+  --h5-font-size: 13px;
+
+  --h6-foreground: #b58900;
+  --h6-font-size: 11px;
+
+  --EMPH-foreground: #586e75;
+  --EMPH-font-style: italic;
+
+  --STRONG-foreground: #586e75;
+  --STRONG-font-style: bold;
+
+  --HRULE-foreground: #b58900;
+
+  --LIST_BULLET-foreground: #93a1a1;
+
+  --LIST_ENUMERATOR-foreground: #93a1a1;
+
+  --LINK-foreground: #268bd2;
+
+  --AUTO_LINK_URL-foreground: #268bd2;
+
+  --AUTO_LINK_EMAIL-foreground: #268bd2;
+
+  --REFERENCE-foreground: #6c71c4;
+
+  --IMAGE-foreground: #cb4b16;
+
+  --CODE-foreground: #586e75;
+  --CODE-background: #eee8d5;
+
+  --VERBATIM-foreground: #586e75;
+  --VERBATIM-background: #eee8d5;
+
+  --HTML_ENTITY-foreground: #93a1a1;
+
+  --COMMENT-foreground: #93a1a1;
+
+  --BLOCKQUOTE-foreground: #657b83;
+}
+[data-theme="writer"] {
+  --editor-foreground: #424242;
+  --editor-background: #fafafa;
+  --editor-caret: #00b9ff;
+
+  --editor-selection-foreground: #fdf6e3;
+  --editor-selection-background: #d33682;
+
+  --h1-foreground: #555555;
+  --h1-font-style: bold;
+  --h1-font-size: 24px;
+
+  --h2-foreground: #555555;
+  --h2-font-style: bold;
+  --h2-font-size: 20px;
+
+  --h3-foreground: #555555;
+  --h3-font-size: 17px;
+
+  --h4-foreground: #555555;
+  --h4-font-size: 15px;
+
+  --h5-foreground: #555555;
+  --h5-font-size: 13px;
+
+  --h6-foreground: #555555;
+  --h6-font-size: 11px;
+
+  --EMPH-foreground: #586e75;
+  --EMPH-font-style: italic;
+
+  --STRONG-foreground: #586e75;
+  --STRONG-font-style: bold;
+
+  --HRULE-foreground: #555555;
+
+  --LIST_BULLET-foreground: #bbbbbb;
+
+  --LIST_ENUMERATOR-foreground: #bbbbbb;
+
+  --LINK-foreground: #555555;
+
+  --AUTO_LINK_URL-foreground: #555555;
+
+  --AUTO_LINK_EMAIL-foreground: #555555;
+
+  --REFERENCE-foreground: #555555;
+
+  --IMAGE-foreground: #555555;
+
+  --CODE-foreground: #555555;
+  --CODE-background: ;
+
+  --VERBATIM-foreground: #555555;
+  --VERBATIM-background: ;
+
+  --HTML_ENTITY-foreground: #555555;
+
+  --COMMENT-foreground: #bbbbbb;
+
+  --BLOCKQUOTE-foreground: #bbbbbb;
+}
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+/*
+    2. Remove default margin
+  */
+* {
+  margin: 0;
+}
+/*
+    Typographic tweaks!
+    3. Add accessible line-height
+    4. Improve text rendering
+  */
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+html,
+title {
+  display: block;
+}
+/*
+    5. Improve media defaults
+  */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+/*
+    6. Remove built-in form typography styles
+  */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+/*
+    7. Avoid text overflows
+  */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+/*
+    8. Create a root stacking context
+  */
+#root,
+#__next {
+  isolation: isolate;
+}
