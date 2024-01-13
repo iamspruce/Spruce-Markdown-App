@@ -23,9 +23,9 @@ export const getMarkdownSyntax = (label: MarkdownSyntaxLabel): string => {
     Link: "[Link Text](url)",
     "Ordered List": "1. ",
     "Unordered List": "- ",
-    Summarize: "/chat>",
-    Ask: "/chat>",
-    Write: "/chat>",
+    Summarize: "/ai>",
+    Ask: "/ai>",
+    Write: "/ai>",
   };
 
   // Get the Markdown syntax for the given label

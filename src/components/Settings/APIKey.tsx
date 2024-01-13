@@ -1,21 +1,21 @@
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import React, { useState, FormEvent } from "react";
+import { useAPIContext } from "@/context/APIProvider";
+import { closeAPIModal } from "@/utils/Api";
+import React, { FormEvent, useRef } from "react";
 
-interface SettingsProps {
-  onSaveApiKey: (apiKey: string, model: string) => void;
-}
+const Settings = () => {
+  const key = useRef<HTMLInputElement>(null);
+  const model = useRef<HTMLSelectElement>(null);
 
-const Settings: React.FC<SettingsProps> = ({ onSaveApiKey }) => {
-  const [apiKey, setApiKey] = useLocalStorage("", "apiKey");
-  const [model, setModel] = useLocalStorage("", "model");
+  const { ApiKey, updateAPIKey } = useAPIContext();
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    onSaveApiKey(apiKey, model);
+    updateAPIKey(key.current?.value!, model.current?.value!);
+    /*   closeAPIModal(); */
   };
   const handleCancel = (event: FormEvent) => {
     event.preventDefault();
-    onSaveApiKey("", "");
+    closeAPIModal();
   };
 
   return (
@@ -31,21 +31,22 @@ const Settings: React.FC<SettingsProps> = ({ onSaveApiKey }) => {
             )
           </p>
           <input
+            ref={key}
             className="settings_apiKey_form_input"
-            type="password"
+            type="text"
             id="api-key"
             name="api-key"
-            value={apiKey}
-            onChange={(e) => setApiKey(e.target.value)}
+            defaultValue={ApiKey.key}
             required
           />
         </label>
         <label htmlFor="api-model">
           <p>Select a model to use (default: gtp-3.5-turbo-1106)</p>
           <select
-            onChange={(e) => setModel(e.target.value)}
+            ref={model}
             name="api-model"
             id="api-model"
+            defaultValue={ApiKey.model}
             className="settings_apiKey_form_select"
           >
             <optgroup label="GPT-4 and GPT-4 Turbo">

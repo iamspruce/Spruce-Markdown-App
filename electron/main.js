@@ -85,12 +85,13 @@ ipcMain.handle("selectFile", async (_event) => {
 ipcMain.handle("openai", async (_event, request) => {
   try {
     let win = BrowserWindow.fromWebContents(_event.sender);
+    console.log(request);
+
     let response = await OpenAIRequest(win, request);
 
     return response;
   } catch (error) {
     if (error instanceof APIConnectionError) {
-      // Handle APIConnectionError specifically
       showError(
         "Network Error",
         "There was a problem connecting to the OpenAI API. Please check your internet connection and try again."
@@ -114,6 +115,13 @@ ipcMain.handle("openai", async (_event, request) => {
 
     return null; // Return an appropriate response or null if necessary
   }
+});
+ipcMain.on("save-openai-key", (_event, { key, model }) => {
+  let newkey = key;
+  if (safeStorage.isEncryptionAvailable() && key !== "") {
+    newkey = safeStorage.encryptString(key);
+  }
+  store.set("openai_key", { key: newkey, model });
 });
 ipcMain.handle("activateLicense", async (_event, licenseKey) => {
   try {

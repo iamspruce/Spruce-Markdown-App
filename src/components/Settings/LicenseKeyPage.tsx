@@ -2,11 +2,7 @@ import { useLicense } from "@/context/LicenseProvider";
 import { closeLicenseModal } from "@/utils/licenseKey";
 import React, { FormEvent } from "react";
 
-interface SettingsProps {
-  onSaveLicenseKey: (licenseKey: string) => void;
-}
-
-const SettingsLicenseKey: React.FC<SettingsProps> = ({ onSaveLicenseKey }) => {
+const SettingsLicenseKey = () => {
   const { licenseKey, updateLicenseKey, activateLicenseKey } = useLicense();
   const key = React.useRef<HTMLInputElement>(null);
   const [loading, setLoading] = React.useState(false);

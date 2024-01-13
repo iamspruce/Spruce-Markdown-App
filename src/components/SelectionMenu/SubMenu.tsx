@@ -1,9 +1,15 @@
+import { useAPIContext } from "@/context/APIProvider";
+import { useLicense } from "@/context/LicenseProvider";
 import React, { useState } from "react";
 import { ChevronDown } from "react-feather";
 
+interface items {
+  name: string;
+  isPro: boolean;
+}
 interface SubMenuProps {
   title: string;
-  items: string[];
+  items: items[];
   pos: { top: number; bottom: number; left: number; right: number };
   subMenus?: SubMenuProps[];
   onItemClick: (item: string) => void;
@@ -16,6 +22,9 @@ const SubMenu: React.FC<SubMenuProps> = ({
   subMenus,
   onItemClick,
 }) => {
+  const { ApiKey } = useAPIContext();
+  const { licenseKey } = useLicense();
+
   const [isOpen, setIsOpen] = useState(false);
   let adjustedPos =
     window.innerHeight - pos.bottom < 268 ? -(218 + 10) : 50 + 10;
@@ -38,8 +47,13 @@ const SubMenu: React.FC<SubMenuProps> = ({
           className="cm-sub-menu"
         >
           {items.map((item) => (
-            <li key={item} onClick={() => onItemClick(item)}>
-              <button>{item}</button>
+            <li key={item.name} onClick={() => onItemClick(item.name)}>
+              <button
+                disabled={item.isPro && licenseKey == null}
+                title={item.isPro ? "Upgrade to pro" : "Continue writing"}
+              >
+                {item.name}
+              </button>
               <div className="loader"></div>
             </li>
           ))}

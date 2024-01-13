@@ -22,7 +22,7 @@ export const AiCommand: MarkdownConfig = {
     {
       name: "AiMark",
       parse(cx: BlockContext, line: Line): boolean {
-        const prefix = "/chat>";
+        const prefix = "/ai>";
 
         if (line.text.startsWith(prefix)) {
           // Calculate the adjusted start and end positions to exclude the "/ai>" prefix

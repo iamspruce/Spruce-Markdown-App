@@ -19,7 +19,7 @@ exports.OpenAIRequest = async (win, content) => {
   if (getAPiKey == undefined) {
     await EnterApiKey(win);
   }
-  const buffer = Buffer.from(store.get("openai_key"), "base64");
+  const buffer = Buffer.from(store.get("openai_key").key, "base64");
   let apiKey = safeStorage.decryptString(buffer);
 
   if (!assistantId) {

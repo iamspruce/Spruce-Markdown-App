@@ -1,7 +1,9 @@
 "use client";
 import Editor from "@/components/Editor";
+import { APIProvider } from "@/context/APIProvider";
 import { usePreferences } from "@/context/AppPreferenceProvider";
 import { DocProvider } from "@/context/DocProvider";
+import { LicenseProvider } from "@/context/LicenseProvider";
 import React from "react";
 
 export default function Home() {
@@ -21,7 +23,11 @@ export default function Home() {
           <div className={`container`} id="container">
             <div className="panels">
               <DocProvider>
-                <Editor />
+                <APIProvider>
+                  <LicenseProvider>
+                    <Editor />
+                  </LicenseProvider>
+                </APIProvider>
               </DocProvider>
             </div>
           </div>

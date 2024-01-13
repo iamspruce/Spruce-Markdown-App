@@ -43,7 +43,7 @@ export const AiInputPlugin = ViewPlugin.fromClass(
             let newText;
             const currentDoc = view.state.doc.toString();
             if (currentDoc !== "") {
-              const splitDoc = currentDoc.split("/chat>");
+              const splitDoc = currentDoc.split("/ai>");
               const prefix = splitDoc[0];
               const suffix = splitDoc[1];
 
@@ -151,7 +151,7 @@ function createActionKeys(target: HTMLElement, view: EditorView) {
   insertButton.textContent = "Insert";
   insertButton.addEventListener("click", () => {
     const currentDoc = view.state.doc.toString();
-    const splitDoc = currentDoc.split("/chat>");
+    const splitDoc = currentDoc.split("/ai>");
     const prefix = splitDoc[0];
     const suffix = splitDoc[1];
 

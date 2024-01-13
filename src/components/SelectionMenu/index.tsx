@@ -37,18 +37,24 @@ const SelectionMenu: React.FC<MenuProps> = ({ show, pos, onMenuItemClick }) => {
         <SubMenu
           title="✨ Ask AI"
           items={[
-            "Improve Writing",
-            "Fix Spelling and Grammar",
-            "Summarize",
-            "Expand",
-            "Continue Writing",
+            { name: "Improve Writing", isPro: false },
+            { name: "Fix Spelling and Grammar", isPro: false },
+            { name: "Summarize", isPro: false },
+            { name: "Expand", isPro: false },
+            { name: "Continue Writing", isPro: true },
           ]}
           pos={pos}
           onItemClick={onMenuItemClick}
           subMenus={[
             {
               title: "Change Tone",
-              items: ["Simple", "Professional"],
+              items: [
+                {
+                  name: "Simple",
+                  isPro: false,
+                },
+                { name: "Professional", isPro: false },
+              ],
               pos: pos,
               onItemClick: onMenuItemClick,
             },

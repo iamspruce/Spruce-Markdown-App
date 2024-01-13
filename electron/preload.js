@@ -1,4 +1,4 @@
-const { contextBridge, ipcRenderer } = require("electron");
+const { contextBridge, ipcRenderer, safeStorage } = require("electron");
 const Store = require("electron-store");
 const store = new Store();
 
@@ -31,11 +31,11 @@ const api = {
   onActivateLicensekey: (value) => ipcRenderer.invoke("activateLicense", value),
   onValidateLicensekey: () => ipcRenderer.invoke("validateLicense"),
   onGetLicensekey: () => store.get("licenseKey"),
-  onSaveLicensekey: (value) => store.set("licenseKey", value),
+
+  onGetAPIKey: () => store.get("openai_key"),
+  onSaveAPIKey: (value) => ipcRenderer.send("save-openai-key", value),
 
   /* settings specific */
-  onAPISaveKey: (key) => ipcRenderer.send("save-api-key", key),
-  onSaveKey: (key) => ipcRenderer.send("save-license-key", key),
   getPreferences: () => store.get("appPreferences"),
   setPreferences: (updatedPreferences) =>
     store.set("appPreferences", updatedPreferences),

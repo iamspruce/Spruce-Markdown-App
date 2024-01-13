@@ -1,3 +1,4 @@
+import { APIProvider } from "@/context/APIProvider";
 import { LicenseProvider } from "@/context/LicenseProvider";
 import type { Metadata } from "next";
 
@@ -14,7 +15,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <LicenseProvider>
-          <main className="settings">{children}</main>
+          <APIProvider>
+            <main className="settings">{children}</main>
+          </APIProvider>
         </LicenseProvider>
       </body>
     </html>
