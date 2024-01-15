@@ -193,7 +193,6 @@ ipcMain.on("open-apiKey-modal", async (_event) => {
 });
 
 ipcMain.on("update-parent", (_event, value) => {
-  console.log(value);
   let win = BrowserWindow.fromWebContents(_event.sender);
   let parentWin = win.getParentWindow();
 
