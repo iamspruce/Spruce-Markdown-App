@@ -2,6 +2,7 @@
 import {
   getPreferences,
   Preferences,
+  prefUpdated,
   setPreferences,
 } from "@/utils/appPreferences";
 import React from "react";
@@ -11,7 +12,7 @@ interface PreferencesContextProps {
   updatePreferences: (name: string, value: string | number | boolean) => void;
 }
 const defaults = {
-  theme: "dark",
+  theme: "writer",
   fontStyle: "FiraCode",
   fontSize: 14,
   ifStream: true,

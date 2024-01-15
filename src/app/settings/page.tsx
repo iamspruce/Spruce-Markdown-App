@@ -15,7 +15,7 @@ const Home = () => {
       type === "checkbox" ? (event.target as HTMLInputElement).checked : value;
 
     updatePreferences(name, newValue);
-    electronAPI.reloadParentWindow();
+    electronAPI.updateParentWindow({ name: name, value: newValue });
   };
 
   const onEnterApiKey = async () => {
@@ -26,7 +26,7 @@ const Home = () => {
   };
 
   return (
-    <>
+    <div className="settings">
       <section className="section">
         <label className="section_label" htmlFor="theme">
           Choose theme:
@@ -188,7 +188,7 @@ const Home = () => {
           </div>
         </label>
       </section>
-    </>
+    </div>
   );
 };
 

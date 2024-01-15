@@ -61,8 +61,6 @@ export const AiInputPlugin = ViewPlugin.fromClass(
                 : target.textContent;
             electronAPI.onOpenai(query).then((response: string) => {
               spinner?.classList.remove("spinner");
-              isResponse = true;
-              target.setAttribute("contenteditable", "false");
 
               function type() {
                 if (index < response.length) {
@@ -76,6 +74,7 @@ export const AiInputPlugin = ViewPlugin.fromClass(
               }
 
               if (response) {
+                isResponse = true;
                 target.textContent = "";
 
                 type();

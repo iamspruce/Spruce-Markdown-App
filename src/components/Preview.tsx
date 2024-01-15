@@ -2,10 +2,16 @@ import React, { useEffect, useRef } from "react";
 
 type PreviewProps = {
   content: string;
+  scrollPos: number;
 };
 
-const Preview: React.FC<PreviewProps> = ({ content }) => {
+const Preview: React.FC<PreviewProps> = ({ content, scrollPos }) => {
   const previewRef = useRef<HTMLDivElement>(null);
+  const previewParentRef = useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    previewParentRef.current!.scrollTop = scrollPos;
+  }, [scrollPos]);
 
   useEffect(() => {
     // Check if previewRef.current is not null before accessing its properties
@@ -16,7 +22,7 @@ const Preview: React.FC<PreviewProps> = ({ content }) => {
   }, [content]);
 
   return (
-    <section className="preview panel" id="panel2">
+    <section ref={previewParentRef} className="preview panel" id="panel2">
       <div id="preview_content" ref={previewRef}></div>
     </section>
   );

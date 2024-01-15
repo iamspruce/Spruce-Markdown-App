@@ -56,47 +56,6 @@ const Menu: React.FC<MenuProps> = ({
     },
   ];
 
-  const aiPoweredMenuItems = [
-    {
-      label: "Grammar Analysis",
-      icon: <Check size={"16px"} />,
-      tooltip: "Analyze grammar in the document",
-      confirmationMessage:
-        "This will analyze the grammar in the document. Do you want to proceed?",
-      keyboardShortcut: "Ctrl+G",
-      onClick: handleGrammarAnalysisClick, // Replace with your actual click handler
-    },
-    {
-      label: "Summarize",
-      icon: <AlertCircle size={"16px"} />,
-      tooltip: "Generate a summary of the document",
-      confirmationMessage:
-        "This will generate a summary of the document. Do you want to proceed?",
-      keyboardShortcut: "Ctrl+S",
-      /* onClick: handleSummarizeClick, // Replace with your actual click handler */
-    },
-    {
-      label: "Ask",
-      icon: <BookOpen size={"16px"} />,
-      tooltip: "Ask a question based on the document",
-      confirmationMessage:
-        "This will generate a question based on the document. Do you want to proceed?",
-      keyboardShortcut: "Ctrl+Q",
-      /*   onClick: handleAskClick, // Replace with your actual click handler */
-    },
-    {
-      label: "Write",
-      icon: <Code size={"16px"} />,
-      tooltip: "Generate written content based on the document",
-      confirmationMessage:
-        "This will generate written content based on the document. Do you want to proceed?",
-      keyboardShortcut: "Ctrl+W",
-      /*     onClick: handleWriteClick, // Replace with your actual click handler */
-    },
-  ];
-
-  function handleGrammarAnalysisClick(params: string) {}
-
   if (!show) {
     return null;
   }
@@ -126,27 +85,6 @@ const Menu: React.FC<MenuProps> = ({
             {basicMenuItems.map((item) => (
               <button
                 key={item.label}
-                onClick={() => onItemClick(item.label as MarkdownSyntaxLabel)}
-              >
-                <span>{item.icon}</span>
-                <div>
-                  <p>{item.label}</p>
-                  <p>{item.tooltip}</p>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* AI Powered Section */}
-        <div className="menu-section">
-          <h3>AI Commands</h3>
-          <div>
-            {aiPoweredMenuItems.map((item) => (
-              <button
-                disabled={isPro == null}
-                key={item.label}
-                title={isPro ? "Pro Feature" : "Upgrade to Pro to unlock"}
                 onClick={() => onItemClick(item.label as MarkdownSyntaxLabel)}
               >
                 <span>{item.icon}</span>

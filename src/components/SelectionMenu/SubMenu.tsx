@@ -12,7 +12,10 @@ interface SubMenuProps {
   items: items[];
   pos: { top: number; bottom: number; left: number; right: number };
   subMenus?: SubMenuProps[];
-  onItemClick: (item: string) => void;
+  onItemClick: (
+    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
+    item: string
+  ) => void;
 }
 
 const SubMenu: React.FC<SubMenuProps> = ({
@@ -26,8 +29,7 @@ const SubMenu: React.FC<SubMenuProps> = ({
   const { licenseKey } = useLicense();
 
   const [isOpen, setIsOpen] = useState(false);
-  let adjustedPos =
-    window.innerHeight - pos.bottom < 268 ? -(218 + 10) : 50 + 10;
+  let adjustedPos = window.innerHeight - pos.bottom < 268 ? -(218 + 5) : 50 + 5;
 
   const toggleSubMenu = () => {
     setIsOpen(!isOpen);
@@ -47,10 +49,10 @@ const SubMenu: React.FC<SubMenuProps> = ({
           className="cm-sub-menu"
         >
           {items.map((item) => (
-            <li key={item.name} onClick={() => onItemClick(item.name)}>
+            <li key={item.name} onClick={(e) => onItemClick(e, item.name)}>
               <button
                 disabled={item.isPro && licenseKey == null}
-                title={item.isPro ? "Upgrade to pro" : "Continue writing"}
+                title={item.isPro ? "Pro Feature" : ""}
               >
                 {item.name}
               </button>

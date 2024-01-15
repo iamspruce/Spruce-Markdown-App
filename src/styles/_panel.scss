@@ -9,20 +9,19 @@
   }
   #panel1 {
     overflow-y: scroll;
-    scrollbar-width: thin;
-    scrollbar-color: var(--editor-caret) var(--editor-caret);
+    scrollbar-color: var(--editor-caret);
 
     &::-webkit-scrollbar {
-      width: 10px;
+      width: 6px;
     }
     &::-webkit-scrollbar-track {
-      /* background-color: var(--editor-foreground); */
-
-      &::-webkit-scrollbar-thumb {
-        background-color: var(--editor-caret);
-        border-radius: 10px;
-        width: 30px;
-      }
+      background-color: var(--editor-foreground);
+    }
+    &::-webkit-scrollbar-thumb {
+      background: var(--editor-caret);
+      color: var(--editor-caret);
+      width: 2px;
+      border-radius: 11px;
     }
   }
   #panel2 {

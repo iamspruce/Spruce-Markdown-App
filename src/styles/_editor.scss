@@ -1,11 +1,13 @@
 .editor {
-  border-right: 2px solid var(--editor-foreground);
+  /*   border-right: 2px solid var(--editor-foreground); */
   background: var(--editor-background);
+  overflow-x: auto;
   .cm-editor {
     padding: 0px;
 
     .cm-scroller {
       font-family: inherit;
+      overflow-x: inherit;
     }
   }
   .cm-scroller {
@@ -207,7 +209,7 @@
           }
 
           .cm-sub-menu {
-            top: calc(100% - 71px) !important;
+            top: calc(100% - 180px) !important;
             left: 148px;
             border: 2px dashed var(--editor-background);
             box-shadow: var(--shadow-elevation-high);

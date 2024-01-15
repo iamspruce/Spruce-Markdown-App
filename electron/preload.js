@@ -27,6 +27,8 @@ const api = {
   getPreferences: () => store.get("appPreferences"),
   setPreferences: (updatedPreferences) =>
     store.set("appPreferences", updatedPreferences),
+  onPrefUpdated: (callback) =>
+    ipcRenderer.on("preferencesUpdated", (_event, value) => callback(value)),
 
   onActivateLicensekey: (value) => ipcRenderer.invoke("activateLicense", value),
   onValidateLicensekey: () => ipcRenderer.invoke("validateLicense"),
@@ -36,13 +38,10 @@ const api = {
   onSaveAPIKey: (value) => ipcRenderer.send("save-openai-key", value),
 
   /* settings specific */
-  getPreferences: () => store.get("appPreferences"),
-  setPreferences: (updatedPreferences) =>
-    store.set("appPreferences", updatedPreferences),
   openLicenseModal: () => ipcRenderer.send("open-license-modal"),
   openAPIKeyModal: () => ipcRenderer.send("open-apiKey-modal"),
   closeModal: () => ipcRenderer.send("close-modal"),
-  reloadParentWindow: () => ipcRenderer.send("reload-parent"),
+  updateParentWindow: (value) => ipcRenderer.send("update-parent", value),
 };
 
 contextBridge.exposeInMainWorld("electronAPI", api);

@@ -42,6 +42,7 @@ const electronAPI =
   typeof window !== "undefined" && (window as any).electronAPI;
 
 const Editor = ({}) => {
+  const [scrollPos, setScrollPos] = React.useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
   const editorViewRef = useRef<EditorView>();
   const [previewContent, setPreviewContent] = useState<string>("");
@@ -98,7 +99,10 @@ const Editor = ({}) => {
     // Apply the transaction to the editor view
     editorViewRef.current!.dispatch(tr);
   };
-  const handleSelectionMenuItemClick = (buttonId: string) => {
+  const handleSelectionMenuItemClick = (
+    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
+    buttonId: string
+  ) => {
     let changes = [];
     let from = editorViewRef.current!.state.selection.main.from;
     let to = editorViewRef.current!.state.selection.main.to;
@@ -216,31 +220,80 @@ const Editor = ({}) => {
         break;
 
       case "Improve Writing":
-        console.log("Improve Writing");
+        handleAskAI("improve", selection, e);
         break;
       case "Fix Spelling and Grammar":
-        console.log("Improve Writing");
+        handleAskAI("Fix Spelling and Grammar", selection, e);
+
         break;
       case "Summarize":
-        console.log("Improve Writing");
+        handleAskAI("Summarize", selection, e);
+
         break;
       case "Expand":
-        console.log("Improve Writing");
+        handleAskAI("Expand", selection, e);
         break;
       case "Continue Writing":
-        console.log("Improve Writing");
+        handleAskAI("Continue writing", selection, e);
         break;
       case "Simple":
-        console.log("Improve Writing");
+        handleAskAI("using a simple tone rewrite", selection, e);
         break;
       case "Professional":
-        console.log("Improve Writing");
+        handleAskAI("using a Professional tone rewrite", selection, e);
+        break;
+      case "Formal":
+        handleAskAI("using a Formal tone rewrite", selection, e);
+        break;
+      case "Creative":
+        handleAskAI("using a Creative tone rewrite", selection, e);
+        break;
+      case "Fluency":
+        handleAskAI("using a Fluency tone rewrite", selection, e);
+        break;
+      case "Friendly":
+        handleAskAI("using a Friendly tone rewrite", selection, e);
+        break;
+      case "Emotional":
+        handleAskAI("using a Emotional tone rewrite", selection, e);
+        break;
+      case "Bold":
+        handleAskAI("using a Bold tone rewrite", selection, e);
+        break;
+      case "Funny":
+        handleAskAI("using a Funny tone rewrite", selection, e);
         break;
       default:
         console.log("Unknown button clicked");
     }
   };
+  function handleAskAI(
+    type: string,
+    selection: string,
+    e: React.MouseEvent<HTMLLIElement, MouseEvent>
+  ) {
+    let loader = e.currentTarget.querySelector(".loader");
+    loader?.classList.add("spinner");
+    const request = `${type} the following: ${selection}`;
+    electronAPI.onOpenai(request).then((response: string) => {
+      let from = editorViewRef.current!.state.selection.main.from;
+      let to = editorViewRef.current!.state.selection.main.to;
+      if (response && response.length > 0) {
+        // Replace the current editor content with the updated text
+        const tr = editorViewRef.current!.state.update({
+          changes: { from, to, insert: response },
+        });
 
+        // Apply the transaction to the editor view
+        editorViewRef.current!.dispatch(tr);
+
+        loader?.classList.remove("spinner");
+        setSelectionShowMenu(false);
+      } else {
+        loader?.classList.remove("spinner");
+      }
+    });
+  }
   const handleImageClick = async () => {
     // Trigger the file selection dialog in the main process
     const selectedFilePath = await electronAPI.selectImage();
@@ -350,9 +403,15 @@ const Editor = ({}) => {
     };
   }, [highlightStyles, initialDoc]);
 
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const { scrollTop } = e.currentTarget;
+    setScrollPos(scrollTop);
+    e.currentTarget.scrollTop = scrollTop;
+  };
+
   return (
     <>
-      <section className="editor panel" id="panel1">
+      <section onScroll={handleScroll} className="editor panel" id="panel1">
         <div
           id="editor_content"
           ref={contentRef}
@@ -371,7 +430,7 @@ const Editor = ({}) => {
           onMenuItemClick={handleSelectionMenuItemClick}
         />
       </section>
-      <Preview content={previewContent} />
+      <Preview scrollPos={scrollPos} content={previewContent} />
     </>
   );
 };

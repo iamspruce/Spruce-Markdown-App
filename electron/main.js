@@ -85,7 +85,6 @@ ipcMain.handle("selectFile", async (_event) => {
 ipcMain.handle("openai", async (_event, request) => {
   try {
     let win = BrowserWindow.fromWebContents(_event.sender);
-    console.log(request);
 
     let response = await OpenAIRequest(win, request);
 
@@ -123,6 +122,14 @@ ipcMain.on("save-openai-key", (_event, { key, model }) => {
   }
   store.set("openai_key", { key: newkey, model });
 });
+ipcMain.on("save-openai-key", (_event, { key, model }) => {
+  let newkey = key;
+  if (safeStorage.isEncryptionAvailable() && key !== "") {
+    newkey = safeStorage.encryptString(key);
+  }
+  store.set("openai_key", { key: newkey, model });
+});
+
 ipcMain.handle("activateLicense", async (_event, licenseKey) => {
   try {
     let win = BrowserWindow.fromWebContents(_event.sender);
@@ -185,12 +192,14 @@ ipcMain.on("open-apiKey-modal", async (_event) => {
   });
 });
 
-ipcMain.on("reload-parent", (_event) => {
+ipcMain.on("update-parent", (_event, value) => {
+  console.log(value);
   let win = BrowserWindow.fromWebContents(_event.sender);
   let parentWin = win.getParentWindow();
 
-  parentWin.webContents.reloadIgnoringCache();
+  parentWin.webContents.send("preferencesUpdated", value);
 });
+
 ipcMain.on("save-api-key", async (_event, response) => {
   let promptModal = BrowserWindow.fromWebContents(_event.sender);
   try {

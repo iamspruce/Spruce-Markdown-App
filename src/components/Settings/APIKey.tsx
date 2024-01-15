@@ -11,7 +11,7 @@ const Settings = () => {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     updateAPIKey(key.current?.value!, model.current?.value!);
-    /*   closeAPIModal(); */
+    closeAPIModal();
   };
   const handleCancel = (event: FormEvent) => {
     event.preventDefault();
@@ -33,7 +33,7 @@ const Settings = () => {
           <input
             ref={key}
             className="settings_apiKey_form_input"
-            type="text"
+            type="password"
             id="api-key"
             name="api-key"
             defaultValue={ApiKey.key}

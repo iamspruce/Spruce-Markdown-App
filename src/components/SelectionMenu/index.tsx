@@ -5,7 +5,10 @@ import { Bold, Italic, Underline, Link } from "react-feather";
 interface MenuProps {
   show: boolean;
   pos: { top: number; bottom: number; left: number; right: number };
-  onMenuItemClick: (item: string) => void;
+  onMenuItemClick: (
+    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
+    item: string
+  ) => void;
 }
 
 const SelectionMenu: React.FC<MenuProps> = ({ show, pos, onMenuItemClick }) => {
@@ -49,33 +52,37 @@ const SelectionMenu: React.FC<MenuProps> = ({ show, pos, onMenuItemClick }) => {
             {
               title: "Change Tone",
               items: [
-                {
-                  name: "Simple",
-                  isPro: false,
-                },
+                { name: "Simple", isPro: false },
                 { name: "Professional", isPro: false },
+                { name: "Formal", isPro: true },
+                { name: "Creative", isPro: true },
+                { name: "Fluency", isPro: true },
+                { name: "Friendly", isPro: true },
+                { name: "Emotional", isPro: true },
+                { name: "Bold", isPro: false },
+                { name: "Funny", isPro: false },
               ],
               pos: pos,
               onItemClick: onMenuItemClick,
             },
           ]}
         />
-        <li onClick={() => onMenuItemClick("bold")}>
+        <li onClick={(e) => onMenuItemClick(e, "bold")}>
           <button>
             <Bold size={16} />
           </button>
         </li>
-        <li onClick={() => onMenuItemClick("italic")}>
+        <li onClick={(e) => onMenuItemClick(e, "italic")}>
           <button>
             <Italic size={16} />
           </button>
         </li>
-        <li onClick={() => onMenuItemClick("underline")}>
+        <li onClick={(e) => onMenuItemClick(e, "underline")}>
           <button>
             <Underline size={16} />
           </button>
         </li>
-        <li onClick={() => onMenuItemClick("link")}>
+        <li onClick={(e) => onMenuItemClick(e, "link")}>
           <button>
             <Link size={16} />
           </button>

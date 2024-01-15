@@ -25,7 +25,6 @@ export const getAPIKey = async (): Promise<ApiKey> => {
   }
 };
 export const saveAPIKey = async (value: object): Promise<void> => {
-  console.log(value);
   try {
     const savedValue = await electronAPI.onSaveAPIKey(value);
     return savedValue;
