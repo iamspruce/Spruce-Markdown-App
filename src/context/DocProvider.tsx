@@ -19,6 +19,7 @@ export const DocProvider = ({ children }: { children: React.ReactNode }) => {
 
   useSaveFileRequest(() => {
     saveDoc(currentDoc.current);
+    setDoc(currentDoc.current);
   });
 
   React.useEffect(() => {

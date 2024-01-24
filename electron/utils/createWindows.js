@@ -1,6 +1,6 @@
 const { BrowserWindow, dialog, ipcMain } = require("electron");
 const path = require("path");
-const serve = require("electron-serve");
+const serve = require("../serve");
 const { handleSaveFileValue } = require("./ipcMainHandlers");
 
 // Maintain a list of open windows
@@ -34,6 +34,7 @@ exports.createWindow = (filePath) => {
     x,
     y,
     webPreferences: {
+      spellcheck: true,
       webSecurity: false,
       contextIsolation: true,
       nodeIntegration: true,
@@ -50,7 +51,7 @@ exports.createWindow = (filePath) => {
   });
 
   /* load the window */
-  process.env.NODE_ENV === "development"
+  process.env.NODE_ENV !== "development"
     ? win.loadURL("http://localhost:3000")
     : appServe(win).then(() => {
         win.loadURL("app://-");

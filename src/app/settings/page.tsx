@@ -124,7 +124,7 @@ const Home = () => {
               id="ifSpellCheck"
             />
             <div>
-              <strong>Spell Check</strong>
+              <strong>Spell Check(coming soon)</strong>
               <p>Enable this to use spell checking in your document</p>
             </div>
           </div>

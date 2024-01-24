@@ -4,8 +4,10 @@ const { safeStorage } = require("electron");
 const { createThread } = require("./createThread");
 const { createMessage } = require("./createMessage");
 const { runThread } = require("./runThread");
-const { EnterApiKey } = require("../utils/EnterAPIkey");
 const { checkAssistant } = require("./checkAssistant");
+const { actionRequired } = require("../utils/modals/actionRequired");
+const { prompt } = require("../utils/modals/promptModal");
+const { showWarning } = require("../utils/notificationHandler");
 
 const store = new Store();
 
@@ -17,7 +19,37 @@ exports.OpenAIRequest = async (win, content) => {
   let getAPiKey = store.get("openai_key");
 
   if (getAPiKey == undefined) {
-    await EnterApiKey(win);
+    const response = await actionRequired(
+      win,
+      "Enter Your OpenAI API Key",
+      "Enter Your OpenAI API Key",
+      "Your API key is stored locally and never sent anywhere else",
+      "Enter your Api Key"
+    );
+    if (response == 0) {
+      await prompt(
+        win,
+        "Enter Your OpenAI API Key",
+        "apikey",
+        "You must provide an OpenAi API key to use this feature"
+      );
+      /* check if api key is still undefined */
+      if (getAPiKey == undefined) {
+        showWarning(
+          win,
+          "API key Required",
+          "An OpenAI API key is requires to use this feature"
+        );
+        return null;
+      }
+    } else {
+      showWarning(
+        win,
+        "API key Required",
+        "An OpenAI API key is requires to use this feature"
+      );
+      return null;
+    }
   }
   const buffer = Buffer.from(store.get("openai_key").key, "base64");
   let apiKey = safeStorage.decryptString(buffer);

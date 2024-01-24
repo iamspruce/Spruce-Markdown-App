@@ -7,8 +7,6 @@ export const handleMenuItemClick = (
   item: MarkdownSyntaxLabel,
   editorViewRef: any
 ) => {
-  setTypedText(item);
-  setShowMenu(false);
   const cursor = editorViewRef.current!.state.selection.main.head;
   const content = editorViewRef.current!.state.doc.toString();
   const prefix = content.slice(0, cursor - 1);

@@ -1,6 +1,10 @@
 const { app, BrowserWindow, Menu, dialog } = require("electron");
 const { createWindow } = require("./createWindows");
 const path = require("path");
+const serve = require("../serve");
+
+const dir = path.join(__dirname, "../../out");
+const appServe = serve({ directory: dir, scheme: "setting" });
 
 const template = [
   {
@@ -144,6 +148,7 @@ if (process.platform === "darwin") {
       {
         label: "Settings",
         role: "Settings",
+        accelerator: "Command+,",
         click: (item, focusedWindow) => {
           const settingsWindow = new BrowserWindow({
             width: 520,
@@ -160,8 +165,12 @@ if (process.platform === "darwin") {
               preload: path.join(__dirname, "../preload.js"),
             },
           });
-          settingsWindow.loadURL("http://localhost:3000/settings");
-
+          process.env.NODE_ENV !== "development"
+            ? settingsWindow.loadURL("http://localhost:3000/settings")
+            : appServe(settingsWindow).then(() => {
+                const url = `setting://-/settings.html`;
+                settingsWindow.loadURL(url);
+              });
           settingsWindow.once("ready-to-show", () => {
             settingsWindow.show();
           });

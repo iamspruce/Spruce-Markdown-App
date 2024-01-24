@@ -18,22 +18,23 @@ const SelectionMenu: React.FC<MenuProps> = ({ show, pos, onMenuItemClick }) => {
   let menuHeight = 50;
   let adjustedPos;
 
-  if (pos.top < menuHeight + 15) {
-    adjustedPos = pos.bottom + 15;
-  } else if (pos.bottom > menuHeight + 15) {
-    adjustedPos = pos.top - 15;
-  } else if (pos.bottom + menuHeight + 15 > window.innerHeight) {
-    adjustedPos = pos.top - 15;
+  if (pos.top < menuHeight + 5) {
+    adjustedPos = pos.bottom + 5;
+  } else if (pos.bottom > menuHeight + 5) {
+    adjustedPos = pos.top - 5;
+  } else if (pos.bottom + menuHeight + 5 > window.innerHeight) {
+    adjustedPos = pos.top - 5;
   }
 
   const centerX = (pos.left + pos.right) / 2;
-  const adjustedBottom = centerX - 300 / 2;
+  let adjustedCenter = centerX - 300 / 2;
+
   return (
     <div
       className="menu cm-selection-menu"
       style={{
         top: `${adjustedPos}px`,
-        left: `${adjustedBottom}px`,
+        left: `${adjustedCenter}px`,
       }}
     >
       <ul>

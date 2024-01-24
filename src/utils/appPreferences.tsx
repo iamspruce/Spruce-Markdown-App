@@ -34,13 +34,9 @@ export const setPreferences = async (
     return null;
   }
 };
-let value: boolean;
 
-export const prefUpdated = async (): Promise<boolean> => {
-  await electronAPI.onPrefUpdated(() => {
-    console.log("ran");
-    value = true;
-  });
-  console.log(value);
-  return value;
+export const prefUpdated = async (
+  callback: ({ name, value }: { name: string; value: string | number }) => void
+): Promise<void> => {
+  await electronAPI.onPrefUpdated(callback);
 };

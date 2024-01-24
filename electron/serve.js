@@ -1,0 +1,99 @@
+"use strict";
+const fs = require("fs");
+const path = require("path");
+const { promisify } = require("util");
+const electron = require("electron");
+
+const stat = promisify(fs.stat);
+
+// See https://cs.chromium.org/chromium/src/net/base/net_error_list.h
+const FILE_NOT_FOUND = -6;
+
+const getPath = async (path_, file) => {
+  try {
+    const result = await stat(path_);
+
+    if (result.isFile()) {
+      return path_;
+    }
+
+    if (result.isDirectory()) {
+      return getPath(path.join(path_, `${file}.html`));
+    }
+  } catch (_) {}
+};
+
+module.exports = (options) => {
+  options = Object.assign(
+    {
+      isCorsEnabled: true,
+      scheme: "app",
+      hostname: "-",
+      file: "index",
+    },
+    options
+  );
+
+  if (!options.directory) {
+    throw new Error("The `directory` option is required");
+  }
+
+  options.directory = path.resolve(
+    electron.app.getAppPath(),
+    options.directory
+  );
+
+  const handler = async (request) => {
+    const indexPath = path.join(options.directory, `${options.file}.html`);
+    const filePath = path.join(
+      options.directory,
+      decodeURIComponent(new URL(request.url).pathname)
+    );
+
+    const resolvedPath = await getPath(filePath, options.file);
+    const fileExtension = path.extname(filePath);
+
+    if (
+      resolvedPath ||
+      !fileExtension ||
+      fileExtension === ".html" ||
+      fileExtension === ".asar"
+    ) {
+      return electron.net.fetch("file:///" + resolvedPath || indexPath);
+    } else {
+      return { error: FILE_NOT_FOUND };
+    }
+  };
+
+  electron.protocol.registerSchemesAsPrivileged([
+    {
+      scheme: options.scheme,
+      privileges: {
+        standard: true,
+        secure: true,
+        allowServiceWorkers: true,
+        supportFetchAPI: true,
+        corsEnabled: options.isCorsEnabled,
+        bypassCSP: true,
+        stream: true,
+      },
+    },
+  ]);
+
+  electron.app.on("ready", () => {
+    const session = options.partition
+      ? electron.session.fromPartition(options.partition)
+      : electron.session.defaultSession;
+
+    session.protocol.handle(options.scheme, handler);
+  });
+
+  return async (window_, searchParameters) => {
+    const queryString = searchParameters
+      ? "?" + new URLSearchParams(searchParameters).toString()
+      : "";
+    await window_.loadURL(
+      `${options.scheme}://${options.hostname}${queryString}`
+    );
+  };
+};

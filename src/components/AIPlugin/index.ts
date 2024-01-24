@@ -6,6 +6,8 @@ import {
 } from "@codemirror/view";
 import { syntaxTree } from "@codemirror/language";
 import { isInAiBlock } from "./isInAiBlock";
+import { usePreferences } from "@/context/AppPreferenceProvider";
+import { Preferences } from "@/utils/appPreferences";
 const electronAPI =
   typeof window !== "undefined" && (window as any).electronAPI;
 
@@ -57,7 +59,7 @@ export const AiInputPlugin = ViewPlugin.fromClass(
             let index = 0;
             let query =
               newText !== ""
-                ? `Given this document: ${newText}, respond to this user query ${target.textContent}`
+                ? `Stduy this: ${newText} \n\n And when necessary use it to respond to this query:\n ${target.textContent}`
                 : target.textContent;
             electronAPI.onOpenai(query).then((response: string) => {
               spinner?.classList.remove("spinner");
@@ -66,7 +68,7 @@ export const AiInputPlugin = ViewPlugin.fromClass(
                 if (index < response.length) {
                   target.textContent += response.charAt(index);
                   index++;
-                  setTimeout(type, 50);
+                  setTimeout(type, 10);
                 } else {
                   createActionKeys(target, view);
                   target.setAttribute("contenteditable", "true");

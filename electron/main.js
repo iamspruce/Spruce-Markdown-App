@@ -5,14 +5,13 @@ const {
   ipcMain,
   dialog,
   safeStorage,
+  protocol,
 } = require("electron");
 const path = require("path");
 const {
   OpenAIError,
   APIConnectionError,
   AuthenticationError,
-  HTTPError,
-  RequestError,
 } = require("openai");
 const Store = require("electron-store");
 
@@ -33,13 +32,19 @@ const {
 const { prompt } = require("./utils/modals/promptModal");
 
 process.env.NODE_ENV = app.isPackaged ? "production" : "development";
-let filePath;
+const defaultFilePath = path.join(__dirname, "untitled.md");
+let filePath = defaultFilePath;
 
 app.whenReady().then(() => {
-  const recentFilePath = readRecentFile();
-  const defaultFilePath = path.join(__dirname, "untitled.md");
-  filePath = recentFilePath || defaultFilePath;
-  app.recentFilePath = filePath;
+  let isOpenPrev = store.get("appPreferences").ifRemDoc;
+
+  if (isOpenPrev) {
+    const recentFilePath = readRecentFile();
+    app.recentFilePath = recentFilePath;
+
+    filePath = recentFilePath;
+  }
+
   createWindow(filePath);
 
   app.on("activate", () => {
@@ -54,7 +59,11 @@ app.whenReady().then(() => {
 ipcMain.handle("openFile", (_event) => {
   let win = BrowserWindow.fromWebContents(_event.sender);
 
-  return openFile(win);
+  if (win.filePath) {
+    return openFile(win);
+  }
+
+  return null;
 });
 
 ipcMain.on("save-file-value", (_event, content) => {
@@ -106,6 +115,7 @@ ipcMain.handle("openai", async (_event, request) => {
       showError(error.name, `${error.message}`);
     } else {
       // Handle other unexpected errors
+      console.log(error);
       showError(
         "Unexpected Error",
         "An unexpected error occurred. Please try again."
@@ -115,13 +125,7 @@ ipcMain.handle("openai", async (_event, request) => {
     return null; // Return an appropriate response or null if necessary
   }
 });
-ipcMain.on("save-openai-key", (_event, { key, model }) => {
-  let newkey = key;
-  if (safeStorage.isEncryptionAvailable() && key !== "") {
-    newkey = safeStorage.encryptString(key);
-  }
-  store.set("openai_key", { key: newkey, model });
-});
+
 ipcMain.on("save-openai-key", (_event, { key, model }) => {
   let newkey = key;
   if (safeStorage.isEncryptionAvailable() && key !== "") {
@@ -151,6 +155,7 @@ ipcMain.handle("activateLicense", async (_event, licenseKey) => {
     }
   }
 });
+
 ipcMain.handle("validateLicense", async (_event) => {
   try {
     let response = await validateLicenseKey();
@@ -177,46 +182,26 @@ ipcMain.handle("get-current-window", (_event) => {
 
 ipcMain.on("open-license-modal", async (_event) => {
   let win = BrowserWindow.fromWebContents(_event.sender);
-  let promptModal = prompt(win, "Enter License Key", "license");
-
-  ipcMain.on("close-modal", (_event) => {
-    promptModal.hide();
-  });
+  prompt(win, "Enter License Key", "license");
 });
+
 ipcMain.on("open-apiKey-modal", async (_event) => {
   let win = BrowserWindow.fromWebContents(_event.sender);
-  let promptModal = prompt(win, "Enter API Key", "apikey");
+  prompt(win, "Enter API Key", "apikey");
+});
 
-  ipcMain.on("close-modal", (_event) => {
-    promptModal.hide();
-  });
+ipcMain.on("close-modal", (_event) => {
+  let promptModal = BrowserWindow.fromWebContents(_event.sender);
+
+  promptModal.hide();
 });
 
 ipcMain.on("update-parent", (_event, value) => {
-  let win = BrowserWindow.fromWebContents(_event.sender);
-  let parentWin = win.getParentWindow();
+  let win = BrowserWindow.getAllWindows();
 
-  parentWin.webContents.send("preferencesUpdated", value);
-});
-
-ipcMain.on("save-api-key", async (_event, response) => {
-  let promptModal = BrowserWindow.fromWebContents(_event.sender);
-  try {
-    let apiKey = response.apiKey;
-    if (safeStorage.isEncryptionAvailable() && apiKey !== "") {
-      let secure_key = safeStorage.encryptString(apiKey);
-      store.set("openai_key", secure_key);
-      store.set("openai_model", response.model);
-      promptModal.hide();
-      showSuccess(
-        win,
-        "API Key Saved",
-        "Your API key has been saved successfully. Now retry your request"
-      );
-    }
-  } catch (error) {
-    showError("Error saving API Key", error.message);
-  }
+  win.forEach((openedWindow) => {
+    openedWindow.webContents.send("preferencesUpdated", value);
+  });
 });
 
 app.on("window-all-closed", () => {

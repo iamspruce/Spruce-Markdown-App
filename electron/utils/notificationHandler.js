@@ -8,6 +8,14 @@ exports.showSuccess = (win, title, message) => {
     detail: message || "Operation completed successfully.",
   });
 };
+exports.showWarning = (win, title, message) => {
+  dialog.showMessageBoxSync(win, {
+    type: "warning",
+    title: title || "Warning",
+    message: title || "Warning",
+    detail: message || "Action required.",
+  });
+};
 
 exports.showError = (title, message) => {
   dialog.showErrorBox(title || "Error", message || "An error occurred.");

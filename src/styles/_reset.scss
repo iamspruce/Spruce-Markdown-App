@@ -19,73 +19,61 @@
 
 [data-theme="tomorrow"] {
   --editor-foreground: #cccccc;
---editor-background: #2d2d2d;
---editor-caret: #cc99cc;
+  --editor-background: #2d2d2d;
+  --editor-caret: #cc99cc;
 
+  --editor-selection-foreground: #ffffff;
+  --editor-selection-background: #515151;
 
---editor-selection-foreground: #ffffff;
---editor-selection-background: #515151;
+  --h1-foreground: #66cccc;
+  --h1-font-style: bold;
 
---h1-foreground: #66cccc;
---h1-font-style: bold;
+  --h2-foreground: #66cccc;
+  --h2-font-style: bold;
 
+  --h3-foreground: #66cccc;
+  --h3-font-style: bold;
 
---h2-foreground: #66cccc;
---h2-font-style: bold;
+  --h4-foreground: #66cccc;
+  --h4-font-style: bold;
 
+  --h5-foreground: #66cccc;
+  --h5-font-style: bold;
 
---h3-foreground: #66cccc;
---h3-font-style: bold;
+  --h6-foreground: #66cccc;
+  --h6-font-style: bold;
 
+  --EMPH-foreground: #ffcc66;
+  --EMPH-font-style: italic;
 
---h4-foreground: #66cccc;
---h4-font-style: bold;
+  --STRONG-foreground: #f99157;
+  --STRONG-font-style: bold;
 
+  --HRULE-foreground: #666666;
 
---h5-foreground: #66cccc
---h5-font-style: bold;
+  --LIST_BULLET-foreground: #6699cc;
 
+  --LIST_ENUMERATOR-foreground: #6699cc;
 
---h6-foreground: #66cccc
---h6-font-style: bold;
+  --LINK-foreground: #99cc99;
 
+  --AUTO_LINK_URL-foreground: #99cc99;
 
---EMPH-foreground: #ffcc66;
---EMPH-font-style: italic;
+  --AUTO_LINK_EMAIL-foreground: #99cc99;
 
+  --REFERENCE-foreground: #66cccc;
 
---STRONG-foreground: #f99157;
---STRONG-font-style: bold;
+  --IMAGE-foreground: #cc99cc;
 
+  --CODE-foreground: #666666;
 
---HRULE-foreground: #999999;
+  --VERBATIM-foreground: #666666;
 
+  --HTML_ENTITY-foreground: #cc99cc;
 
---LIST_BULLET-foreground: #6699cc;
+  --COMMENT-foreground: #888888;
 
-
---LIST_ENUMERATOR-foreground: #6699cc;
-
-
---LINK-foreground: #99cc99;
-
---AUTO_LINK_URL-foreground: #99cc99;
-
---AUTO_LINK_EMAIL-foreground: #99cc99;
-
---REFERENCE-foreground: #66cccc;
-
---IMAGE-foreground: #cc99cc;
-
---CODE-foreground: #999999;
-
---VERBATIM-foreground: #999999;
-
---HTML_ENTITY-foreground: #cc99cc;
-
---COMMENT-foreground: #888888;
-
---BLOCKQUOTE-foreground: #f2777a;
+  --BLOCKQUOTE-foreground: #f2777a;
 }
 [data-theme="solorizedDark"] {
   --editor-foreground: #839496;
@@ -247,9 +235,9 @@
 
   --HRULE-foreground: #555555;
 
-  --LIST_BULLET-foreground: #bbbbbb;
+  --LIST_BULLET-foreground: #666666;
 
-  --LIST_ENUMERATOR-foreground: #bbbbbb;
+  --LIST_ENUMERATOR-foreground: #666666;
 
   --LINK-foreground: #555555;
 
@@ -269,9 +257,9 @@
 
   --HTML_ENTITY-foreground: #555555;
 
-  --COMMENT-foreground: #bbbbbb;
+  --COMMENT-foreground: #666666;
 
-  --BLOCKQUOTE-foreground: #bbbbbb;
+  --BLOCKQUOTE-foreground: #666666;
 }
 /*
   1. Use a more-intuitive box-sizing model.
@@ -295,7 +283,6 @@
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  position: relative;
 }
 html,
 title {

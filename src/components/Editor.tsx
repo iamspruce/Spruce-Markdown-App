@@ -1,9 +1,13 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
+
 import { micromark } from "micromark";
 import { gfm, gfmHtml } from "micromark-extension-gfm";
+import { math, mathHtml } from "micromark-extension-math";
+import { frontmatter, frontmatterHtml } from "micromark-extension-frontmatter";
 
-import { EditorSelection, EditorState, Text } from "@codemirror/state";
+import { EditorState, Text } from "@codemirror/state";
+import { history, historyKeymap } from "@codemirror/commands";
 import {
   EditorView,
   keymap,
@@ -301,7 +305,7 @@ const Editor = ({}) => {
     if (selectedFilePath) {
       // Construct markdown syntax with the selected file path
       const imageSource = `file://${selectedFilePath}`;
-      const markdownSyntax = `![Alt text](${imageSource})`;
+      const markdownSyntax = `![Alt text](${encodeURI(imageSource)})`;
 
       // Insert the markdownSyntax at the cursor position
       const cursor = editorViewRef.current!.state.selection.main.head;
@@ -325,8 +329,8 @@ const Editor = ({}) => {
     const editorContent = change.state.doc.toString();
     setPreviewContent(
       micromark(editorContent, {
-        extensions: [gfm()],
-        htmlExtensions: [gfmHtml()],
+        extensions: [gfm(), math(), frontmatter()],
+        htmlExtensions: [gfmHtml(), mathHtml(), frontmatterHtml()],
         allowDangerousProtocol: true,
       })
     );
@@ -354,6 +358,8 @@ const Editor = ({}) => {
         drawSelection(),
         rectangularSelection(),
         keymap.of(markdownKeymap),
+        history(),
+        keymap.of(historyKeymap),
         AiInputPlugin,
         syntaxHighlighting(highlightStyles),
         editorTheme,

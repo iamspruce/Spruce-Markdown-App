@@ -1,34 +1,51 @@
 const { BrowserWindow } = require("electron");
 const path = require("path");
+const serve = require("../../serve");
+
+const dir = path.join(__dirname, "../../../out");
+
+const appServe = serve({ directory: dir, scheme: "settings" });
 
 exports.prompt = (parentWin, title, page) => {
-  let prompt = new BrowserWindow({
-    height: 340,
-    width: 480,
-    parent: parentWin,
-    modal: true,
-    show: false,
-    useContentSize: true,
-    minimizable: false,
-    maximizable: false,
-    resizable: false,
-    skipTaskbar: true,
-    title: title,
-    frame: false,
-    alwaysOnTop: true,
-    backgroundColor: "#fff",
-    webPreferences: {
-      /*  devTools: false, */
-      contextIsolation: true,
-      nodeIntegration: true,
-      preload: path.join(__dirname, "../../preload.js"),
-    },
-  });
-  prompt.loadURL(`http://localhost:3000/settings/${page}`);
+  return new Promise((resolve, reject) => {
+    let prompt = new BrowserWindow({
+      height: 340,
+      width: 480,
+      parent: parentWin,
+      modal: true,
+      show: false,
+      useContentSize: true,
+      minimizable: false,
+      maximizable: false,
+      resizable: false,
+      skipTaskbar: true,
+      title: title,
+      frame: false,
+      alwaysOnTop: true,
+      backgroundColor: "#fff",
+      filePath: "",
 
-  prompt.once("ready-to-show", () => {
-    prompt.show();
-  });
+      webPreferences: {
+        /*  devTools: false, */
+        contextIsolation: true,
+        nodeIntegration: true,
+        preload: path.join(__dirname, "../../preload.js"),
+      },
+    });
 
-  return prompt;
+    process.env.NODE_ENV !== "development"
+      ? prompt.loadURL(`http://localhost:3000/settings/${page}`)
+      : appServe(prompt).then(() => {
+          const url = `settings://-/settings/${page}.html`;
+          prompt.loadURL(url);
+        });
+
+    prompt.once("ready-to-show", () => {
+      prompt.show();
+    });
+
+    prompt.on("hide", () => {
+      resolve();
+    });
+  });
 };

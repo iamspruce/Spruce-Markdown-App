@@ -17,8 +17,8 @@ const defaults = {
   fontSize: 14,
   ifStream: true,
   ifRemDoc: true,
-  ifSpellCheck: true,
-  ifCodeHighlight: true,
+  ifSpellCheck: false,
+  ifCodeHighlight: false,
   ifWordCount: false,
 };
 export const PreferencesContext = React.createContext<
@@ -69,6 +69,20 @@ export function PreferencesProvider({
 
     updatePref();
   }, [preferences]);
+
+  const handlePref = ({
+    name,
+    value,
+  }: {
+    name: string;
+    value: string | number;
+  }) => {
+    updatePreferences(name, value);
+  };
+
+  React.useEffect(() => {
+    prefUpdated(handlePref);
+  }, []);
 
   return (
     <PreferencesContext.Provider

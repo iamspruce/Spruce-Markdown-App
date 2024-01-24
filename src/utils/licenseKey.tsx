@@ -3,11 +3,11 @@ const electronAPI =
 
 export const getLicense = async (): Promise<string> => {
   try {
-    const { key } = await electronAPI.onGetLicensekey();
-    if (key == undefined) {
+    const license = await electronAPI.onGetLicensekey();
+    if (license == undefined) {
       return "";
     } else {
-      return key;
+      return license.key;
     }
   } catch (error) {
     console.error("Error fetching doc:", error);

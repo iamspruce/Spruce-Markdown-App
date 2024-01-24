@@ -51,8 +51,12 @@ const SubMenu: React.FC<SubMenuProps> = ({
           {items.map((item) => (
             <li key={item.name} onClick={(e) => onItemClick(e, item.name)}>
               <button
-                disabled={item.isPro && licenseKey == null}
-                title={item.isPro ? "Pro Feature" : ""}
+                disabled={item.isPro && licenseKey == ""}
+                title={
+                  item.isPro && licenseKey == ""
+                    ? "Upgrade to Pro to use this feature"
+                    : "Pro User"
+                }
               >
                 {item.name}
               </button>
