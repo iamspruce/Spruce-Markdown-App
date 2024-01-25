@@ -6,23 +6,29 @@ const Store = require("electron-store");
 const store = new Store();
 
 exports.updateTitle = (win, isChanged, wordCount) => {
-  const ifWordCount = store.get("appPreferences").ifWordCount;
+  const fileName = path.basename(win.filePath);
 
-  const totalWords = ifWordCount ? `${wordCount} words` : "";
+  let pref = store.get("appPreferences");
+  let ifWordCount = false;
+
+  if (pref && pref.ifWordCount) {
+    ifWordCount = true;
+  }
+  const totalWords = ifWordCount ? `(${wordCount} words)` : "";
 
   if (isChanged) {
     win.setDocumentEdited(true);
     const currentTitle = win.getTitle();
-    const editedTitle = currentTitle.includes("(edited)")
-      ? `${currentTitle}`
-      : `${currentTitle} (edited)`;
+    let prevWords = currentTitle.replace(/\(([^)]+)\)/g, `${totalWords}`);
+    const editedTitle = currentTitle.includes("- edited")
+      ? `${prevWords}`
+      : `${fileName} - edited ${totalWords}`;
 
     win.setTitle(editedTitle);
   } else {
     win.setDocumentEdited(false);
 
-    const fileName = path.basename(win.filePath);
-    win.setTitle(`Spruce - ${fileName}`);
+    win.setTitle(`${fileName} ${totalWords}`);
     win.setRepresentedFilename(win.filePath);
     app.addRecentDocument(win.filePath);
     writeRecentFile(win.filePath);

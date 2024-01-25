@@ -12,9 +12,9 @@ interface PreferencesContextProps {
   updatePreferences: (name: string, value: string | number | boolean) => void;
 }
 const defaults = {
-  theme: "writer",
+  theme: "solorizedDark",
   fontStyle: "FiraCode",
-  fontSize: 14,
+  fontSize: 16,
   ifStream: true,
   ifRemDoc: true,
   ifSpellCheck: false,
@@ -38,7 +38,9 @@ export function PreferencesProvider({
     const fetchPref = async () => {
       const fetchedPref = await getPreferences();
 
-      if (fetchedPref !== null) {
+      console.log("fetched", fetchedPref);
+
+      if (fetchedPref !== undefined) {
         setPreferencesState(fetchedPref);
       } else {
         setPreferencesState(defaults);
@@ -64,7 +66,10 @@ export function PreferencesProvider({
 
   React.useEffect(() => {
     const updatePref = async () => {
-      await setPreferences(preferences!);
+      if (preferences! !== defaults) {
+        console.log("did i run", preferences, defaults);
+        await setPreferences(preferences!);
+      }
     };
 
     updatePref();

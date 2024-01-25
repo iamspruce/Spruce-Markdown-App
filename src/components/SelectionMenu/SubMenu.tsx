@@ -29,7 +29,8 @@ const SubMenu: React.FC<SubMenuProps> = ({
   const { licenseKey } = useLicense();
 
   const [isOpen, setIsOpen] = useState(false);
-  let adjustedPos = window.innerHeight - pos.bottom < 268 ? -(218 + 5) : 50 + 5;
+  let adjustedPos =
+    window.innerHeight - pos.bottom < 268 ? -(218 + 15) : 50 + 15;
 
   const toggleSubMenu = () => {
     setIsOpen(!isOpen);

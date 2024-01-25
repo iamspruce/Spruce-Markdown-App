@@ -1,8 +1,8 @@
-const { BrowserWindow } = require("electron");
+const { BrowserWindow, shell } = require("electron");
 const path = require("path");
 const serve = require("../../serve");
 
-const dir = path.join(__dirname, "../../../out");
+const dir = path.join(__dirname, "../../../app");
 
 const appServe = serve({ directory: dir, scheme: "settings" });
 
@@ -33,7 +33,7 @@ exports.prompt = (parentWin, title, page) => {
       },
     });
 
-    process.env.NODE_ENV !== "development"
+    process.env.NODE_ENV == "development"
       ? prompt.loadURL(`http://localhost:3000/settings/${page}`)
       : appServe(prompt).then(() => {
           const url = `settings://-/settings/${page}.html`;
@@ -42,6 +42,12 @@ exports.prompt = (parentWin, title, page) => {
 
     prompt.once("ready-to-show", () => {
       prompt.show();
+    });
+
+    prompt.webContents.setWindowOpenHandler((details) => {
+      console.log(details);
+      shell.openExternal(details.url); // Open URL in user's browser.
+      return { action: "deny" }; // Prevent the app from opening the URL.
     });
 
     prompt.on("hide", () => {

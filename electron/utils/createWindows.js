@@ -2,11 +2,10 @@ const { BrowserWindow, dialog, ipcMain } = require("electron");
 const path = require("path");
 const serve = require("../serve");
 const { handleSaveFileValue } = require("./ipcMainHandlers");
-
 // Maintain a list of open windows
 const openWindows = [];
 
-const page = path.join(__dirname, "../../out");
+const page = path.join(__dirname, "../../app");
 const appServe = serve({ directory: page });
 
 exports.createWindow = (filePath) => {
@@ -33,6 +32,7 @@ exports.createWindow = (filePath) => {
     show: false,
     x,
     y,
+    icon: "../../public/icons/icon.png",
     webPreferences: {
       spellcheck: true,
       webSecurity: false,
@@ -51,7 +51,7 @@ exports.createWindow = (filePath) => {
   });
 
   /* load the window */
-  process.env.NODE_ENV !== "development"
+  process.env.NODE_ENV === "development"
     ? win.loadURL("http://localhost:3000")
     : appServe(win).then(() => {
         win.loadURL("app://-");

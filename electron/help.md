@@ -2,7 +2,6 @@
 
 Welcome to the Markdown App! This guide will help you get started and make the most out of the app's features.
 
-
 ## Table of Contents
 
 1. [Getting Started](#getting-started)

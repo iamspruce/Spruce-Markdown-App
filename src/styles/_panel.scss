@@ -12,7 +12,7 @@
     scrollbar-color: var(--editor-caret);
 
     &::-webkit-scrollbar {
-      width: 6px;
+      width: 2px;
     }
     &::-webkit-scrollbar-track {
       background-color: var(--editor-foreground);
@@ -20,7 +20,7 @@
     &::-webkit-scrollbar-thumb {
       background: var(--editor-caret);
       color: var(--editor-caret);
-      width: 2px;
+      /* width: 2px; */
       border-radius: 11px;
     }
   }

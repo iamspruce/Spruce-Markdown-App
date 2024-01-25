@@ -3,7 +3,7 @@ const { createWindow } = require("./createWindows");
 const path = require("path");
 const serve = require("../serve");
 
-const dir = path.join(__dirname, "../../out");
+const dir = path.join(__dirname, "../../app");
 const appServe = serve({ directory: dir, scheme: "setting" });
 
 const template = [
@@ -11,14 +11,14 @@ const template = [
     label: "File",
     submenu: [
       {
-        label: "New File",
+        label: "New Document",
         accelerator: "CommandOrControl+N",
         click() {
           createWindow();
         },
       },
       {
-        label: "Open File",
+        label: "Open Document",
         accelerator: "CommandOrControl+O",
         click: async (item, focusedWindow) => {
           try {
@@ -40,7 +40,7 @@ const template = [
         },
       },
       {
-        label: "Save File",
+        label: "Save Document",
         accelerator: "CommandOrControl+S",
         click: () => {
           // Trigger the save logic in your renderer process
@@ -115,15 +115,10 @@ const template = [
     role: "help",
     submenu: [
       {
-        label: "Visit Website",
-        click() {
-          /* To be implemented */
-        },
-      },
-      {
-        label: "Toggle Developer Tools",
+        label: "Markdown help",
         click(item, focusedWindow) {
-          if (focusedWindow) focusedWindow.webContents.toggleDevTools();
+          const filePath = path.join(__dirname, "../help.md");
+          createWindow(filePath);
         },
       },
     ],
@@ -165,7 +160,7 @@ if (process.platform === "darwin") {
               preload: path.join(__dirname, "../preload.js"),
             },
           });
-          process.env.NODE_ENV !== "development"
+          process.env.NODE_ENV == "development"
             ? settingsWindow.loadURL("http://localhost:3000/settings")
             : appServe(settingsWindow).then(() => {
                 const url = `setting://-/settings.html`;
