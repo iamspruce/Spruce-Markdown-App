@@ -38,8 +38,6 @@ export function PreferencesProvider({
     const fetchPref = async () => {
       const fetchedPref = await getPreferences();
 
-      console.log("fetched", fetchedPref);
-
       if (fetchedPref !== undefined) {
         setPreferencesState(fetchedPref);
       } else {
@@ -67,7 +65,6 @@ export function PreferencesProvider({
   React.useEffect(() => {
     const updatePref = async () => {
       if (preferences! !== defaults) {
-        console.log("did i run", preferences, defaults);
         await setPreferences(preferences!);
       }
     };

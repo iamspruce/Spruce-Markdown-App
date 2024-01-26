@@ -1,5 +1,5 @@
 {
-  "name": "SpruceMarkdownApp",
+  "name": "sprucemarkdownapp",
   "version": "1.0.0",
   "main": "electron/main.js",
   "description": "Spruce (Markdown App), write in a neat and smart way",

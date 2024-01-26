@@ -4,6 +4,7 @@ module.exports = {
     name: "Spruce Markdown App",
     appVersion: "1.0.0",
     icon: "./public/icons/icon",
+    prune: true,
   },
   plugins: [
     {

@@ -43,13 +43,16 @@ const SettingsLicenseKey = () => {
           />
           <p>
             Don't have one?{" "}
-            <a href="https://sprucemarkdownapp.lemonsqueezy.com/checkout">
+            <a
+              target="_blank"
+              href="https://sprucemarkdownapp.lemonsqueezy.com/checkout"
+            >
               → Buy A license Key
             </a>
           </p>
           <p>
             Lost your License Key?{" "}
-            <a href="https://app.lemonsqueezy.com/my-orders/">
+            <a target="_blank" href="https://app.lemonsqueezy.com/my-orders/">
               → Recover License Key
             </a>
           </p>

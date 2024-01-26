@@ -5,7 +5,6 @@ const {
   ipcMain,
   dialog,
   safeStorage,
-  autoUpdater,
 } = require("electron");
 const path = require("path");
 const {
@@ -41,16 +40,11 @@ if (require("electron-squirrel-startup")) {
   app.quit();
 }
 
-const server = "https://hazel-psi-flame.vercel.app/";
-const url = `${server}/update/${process.platform}/${app.getVersion()}`;
-
-autoUpdater.setFeedURL({ url });
-
 let mainWindow;
 app.whenReady().then(() => {
-  let isOpenPrev = store.get("appPreferences");
+  let isPref = store.get("appPreferences");
 
-  if (isOpenPrev && isOpenPrev.ifRemDoc) {
+  if (isPref && isPref.ifRemDoc) {
     const recentFilePath = readRecentFile();
     app.recentFilePath = recentFilePath;
 
@@ -220,29 +214,4 @@ app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
-});
-
-/* check for updates */
-setInterval(() => {
-  autoUpdater.checkForUpdates();
-}, 100000);
-
-autoUpdater.on("update-downloaded", (event, releaseNotes, releaseName) => {
-  const dialogOpts = {
-    type: "info",
-    buttons: ["Restart", "Later"],
-    title: "Application Update",
-    message: process.platform === "win32" ? releaseNotes : releaseName,
-    detail:
-      "A new version has been downloaded. Restart the application to apply the updates.",
-  };
-
-  dialog.showMessageBox(dialogOpts).then((returnValue) => {
-    if (returnValue.response === 0) autoUpdater.quitAndInstall();
-  });
-});
-
-autoUpdater.on("error", (message) => {
-  console.error("There was a problem updating the application");
-  console.error(message);
 });
