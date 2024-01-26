@@ -1,6 +1,6 @@
 {
   "name": "SpruceMarkdownApp",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "main": "electron/main.js",
   "description": "Spruce (Markdown App), write in a neat and smart way",
   "scripts": {

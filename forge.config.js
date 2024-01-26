@@ -47,6 +47,7 @@ module.exports = {
           name: "Spruce-Markdown-App",
         },
         prerelease: true,
+        draft: true,
       },
     },
   ],
