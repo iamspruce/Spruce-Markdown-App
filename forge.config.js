@@ -24,7 +24,14 @@ module.exports = {
     },
     {
       name: "@electron-forge/maker-deb",
-      config: {},
+      executableName: "SpruceMarkdownApp",
+      config: {
+        options: {
+          icon: "./public/icons/icon.png",
+          name: "SpruceMarkdownApp",
+          productName: "SpruceMarkdownApp",
+        },
+      },
     },
     {
       name: "@electron-forge/maker-rpm",
