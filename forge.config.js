@@ -15,7 +15,7 @@ module.exports = {
     {
       name: "@electron-forge/maker-squirrel",
       config: {
-        name: "Spruce Markdown App",
+        name: "SpruceMarkdownApp",
       },
     },
     {
