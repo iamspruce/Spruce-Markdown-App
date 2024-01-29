@@ -7,7 +7,7 @@ exports.createAssistant = async (apiKey) => {
   const openai = new OpenAI({ apiKey: apiKey });
 
   let model = "gpt-3.5-turbo-0613";
-  let getModel = store.get("openai_model");
+  let getModel = store.get("openai_key").model;
   if (getModel !== undefined || getModel !== "") {
     model = getModel;
   }

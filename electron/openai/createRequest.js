@@ -51,11 +51,12 @@ exports.OpenAIRequest = async (win, content) => {
       return null;
     }
   }
-  const buffer = Buffer.from(store.get("openai_key").key, "base64");
+  const buffer = Buffer.from(getAPiKey.key, "base64");
   let apiKey = safeStorage.decryptString(buffer);
 
   if (!assistantId) {
     assistantId = await createAssistant(apiKey).id;
+    console.log("not run", assistantId);
   }
 
   if (assistantId) {

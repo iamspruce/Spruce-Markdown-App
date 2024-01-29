@@ -118,6 +118,7 @@ ipcMain.handle("openai", async (_event, request) => {
       );
     } else if (error instanceof OpenAIError) {
       // Handle OpenAI specific errors
+      console.log(error);
       showError(error.name, `${error.message}`);
     } else {
       // Handle other unexpected errors
